@@ -32,9 +32,6 @@ function App() {
       path: '/subscription-report',
       element: <SubscriptionReport />,
     },
-    {
-      path:"*" , element:<Navigate to="/" />
-    }
   ]);
 
   return (
