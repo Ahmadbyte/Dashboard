@@ -53,7 +53,7 @@ const SubscriptionReport = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/subscriptions/getall`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}api/subscriptions/getall`);
       setSubscriptions(response.data);
     } catch (error) {
       console.error('Error fetching subscriptions:', error);
@@ -67,7 +67,7 @@ const SubscriptionReport = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/subscriptions/delete/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}api/subscriptions/delete/${id}`);
       setSubscriptions((prevSubscriptions) => prevSubscriptions.filter((sub) => sub._id !== id));
     } catch (error) {
       console.error('Error deleting subscription:', error);
