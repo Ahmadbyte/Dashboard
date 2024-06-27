@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './SubscriptionReport.css'; // Make sure the CSS file is correctly imported
-import config from '../config'; // Import the configuration
+// import config from '../config'; // Import the configurations
 
 const SubscriptionReport = () => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -53,7 +53,7 @@ const SubscriptionReport = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${config.apiUrl}/subscriptions/getall`);
+      const response = await axios.get(`http://localhost:8000/api/subscriptions/getall`);
       setSubscriptions(response.data);
     } catch (error) {
       console.error('Error fetching subscriptions:', error);
@@ -67,7 +67,7 @@ const SubscriptionReport = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${config.apiUrl}/subscriptions/delete/${id}`);
+      await axios.delete(`http://localhost:8000/api/subscriptions/delete/${id}`);
       setSubscriptions((prevSubscriptions) => prevSubscriptions.filter((sub) => sub._id !== id));
     } catch (error) {
       console.error('Error deleting subscription:', error);

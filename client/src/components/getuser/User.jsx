@@ -3,7 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import './user.css';
-import config from '../../config'; // Import the configuration
+// import config from '../../config'; // Import the configuration
 
 const User = () => {
   const [users, setUsers] = useState([]);
@@ -11,7 +11,7 @@ const User = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${config.apiUrl}/getall`);
+        const response = await axios.get(`http://localhost:8000/api/getall`);
         setUsers(response.data);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -24,7 +24,7 @@ const User = () => {
 
   const deleteUser = async (userId) => {
     try {
-      await axios.delete(`${config.apiUrl}/delete/${userId}`);
+      await axios.delete(`http://localhost:8000/api/delete/${userId}`);
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));
       toast.success('User deleted successfully', { position: 'top-right' });
     } catch (error) {

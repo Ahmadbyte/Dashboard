@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './add.css';
 import toast from 'react-hot-toast';
-import config from '../../config'; // Import the configuration
+// import config from '../../config'; // Import the configuration
 
 const Add = () => {
   const users = {
@@ -24,7 +24,7 @@ const Add = () => {
   const submitForm = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${config.apiUrl}/create`, user);
+      const response = await axios.post(`http://localhost:8000/api/create`, user);
       toast.success(response.data.msg, { position: "top-right" });
       navigate("/");
     } catch (error) {
