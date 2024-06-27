@@ -24,7 +24,7 @@ const Add = () => {
   const submitForm = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:8000/api/create`, user);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}api/create`, user);
       toast.success(response.data.msg, { position: "top-right" });
       navigate("/");
     } catch (error) {
