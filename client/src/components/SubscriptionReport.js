@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './SubscriptionReport.css'; // Make sure the CSS file is correctly imported
+import config from '../config'; // Import the configuration
 
 const SubscriptionReport = () => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -14,7 +15,7 @@ const SubscriptionReport = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/subscriptions/getall`);
+      const response = await axios.get(`${config.apiUrl}/subscriptions/getall`);
       setSubscriptions(response.data);
     } catch (error) {
       console.error('Error fetching subscriptions:', error);
@@ -66,7 +67,7 @@ const SubscriptionReport = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/subscriptions/delete/${id}`);
+      await axios.delete(`${config.apiUrl}/subscriptions/delete/${id}`);
       setSubscriptions((prevSubscriptions) => prevSubscriptions.filter((sub) => sub._id !== id));
     } catch (error) {
       console.error('Error deleting subscription:', error);
@@ -80,7 +81,6 @@ const SubscriptionReport = () => {
         <Link to="/" className="addButton">Back to User</Link>
         <Link to="/subscriptions" className="addButton">Add Subscription</Link>
       </div>
-      <button onClick={setupSpeechRecognition}>Start Listening</button> {/* Button to start speech recognition */}
       <table className="subscription-report-table">
         <thead>
           <tr>
