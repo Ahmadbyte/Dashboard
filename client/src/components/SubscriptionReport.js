@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './SubscriptionReport.css'; // Make sure the CSS file is correctly imported
@@ -8,21 +8,7 @@ const SubscriptionReport = () => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [listening, setListening] = useState(false); // State to manage speech recognition
 
-  useEffect(() => {
-    setupSpeechRecognition(); // Include setupSpeechRecognition in useEffect
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${config.apiUrl}/subscriptions/getall`);
-      setSubscriptions(response.data);
-    } catch (error) {
-      console.error('Error fetching subscriptions:', error);
-    }
-  };
-
-  const setupSpeechRecognition = () => {
+  const setupSpeechRecognition = useCallback(() => {
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognition = new SpeechRecognition();
@@ -57,6 +43,20 @@ const SubscriptionReport = () => {
       recognition.start();
     } else {
       console.error('Speech recognition not supported');
+    }
+  }, []);
+
+  useEffect(() => {
+    setupSpeechRecognition(); // Include setupSpeechRecognition in useEffect
+    fetchData();
+  }, [setupSpeechRecognition]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${config.apiUrl}/subscriptions/getall`);
+      setSubscriptions(response.data);
+    } catch (error) {
+      console.error('Error fetching subscriptions:', error);
     }
   };
 
