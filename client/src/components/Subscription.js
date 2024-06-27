@@ -17,7 +17,7 @@ const Subscription = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/api/subscriptions/getall`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}api/subscriptions/getall`);
       setSubscriptions(response.data);
     } catch (error) {
       console.error('Error fetching subscriptions:', error);
@@ -27,7 +27,7 @@ const Subscription = () => {
 
   const addSubscription = async () => {
     try {
-      await axios.post(`http://localhost:8000/api/subscriptions/add`, { name, price, description });
+      await axios.post(`${process.env.REACT_APP_API_URL}api/subscriptions/add`, { name, price, description });
       toast.success('Subscription added successfully', { position: 'top-right' });
       fetchData(); // Refresh subscription list after adding
     } catch (error) {
@@ -38,7 +38,7 @@ const Subscription = () => {
 
   const deleteSubscription = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/subscriptions/delete/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}api/subscriptions/delete/${id}`);
       toast.success('Subscription deleted successfully', { position: 'top-right' });
       setSubscriptions((prevSubscriptions) => prevSubscriptions.filter((sub) => sub._id !== id));
     } catch (error) {
